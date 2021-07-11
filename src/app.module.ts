@@ -1,10 +1,20 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TokensModule } from './tokens/tokens.module';
+import { ConfigModule } from '@nestjs/config';
+import { UsersGateway } from './users.gateway';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    UsersModule,
+    AuthModule,
+    TypeOrmModule.forRoot(),
+    TokensModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+  ],
+  exports: [],
+  providers: [UsersGateway],
 })
 export class AppModule {}
